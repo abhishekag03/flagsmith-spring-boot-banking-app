@@ -5,6 +5,7 @@ import com.flagsmith.FlagsmithClient;
 import com.flagsmith.exceptions.FlagsmithApiError;
 import com.flagsmith.exceptions.FlagsmithClientError;
 import com.flagsmith.models.Flags;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,15 +19,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Service
 public class FlagsmithSpringBootBankingAppApplication {
-    private static AccountService accountService;
-    private static FlagsmithClient flagsmithClient;
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private FlagsmithClient flagsmithClient;
+
+
     public static void main(String[] args) {
-        flagsmithClient = FlagsmithClient
-                .newBuilder()
-                .setApiKey("ser.****")
-                .build();
-    accountService = new AccountService();
-    SpringApplication.run(FlagsmithSpringBootBankingAppApplication.class, args);
+        SpringApplication.run(FlagsmithSpringBootBankingAppApplication.class, args);
     }
 
     // endpoint to create a new account
