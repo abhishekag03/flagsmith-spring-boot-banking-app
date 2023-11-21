@@ -15,7 +15,7 @@ public class AppConfig {
     public FlagsmithClient flagsmithClient() {
         return FlagsmithClient
                 .newBuilder()
-                .setApiKey("ser.9ZHAnRhWWxs3xschtnbp6Z")
+                .setApiKey("ser.****")
                 .build();
     }
 }
