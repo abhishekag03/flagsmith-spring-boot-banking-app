@@ -25,6 +25,7 @@ public class FlagsmithSpringBootBankingAppApplication {
     @Autowired
     private FlagsmithClient flagsmithClient;
 
+    double defaultInterestRate = 3.5;
 
     public static void main(String[] args) {
         SpringApplication.run(FlagsmithSpringBootBankingAppApplication.class, args);
@@ -74,8 +75,15 @@ public class FlagsmithSpringBootBankingAppApplication {
 
     // endpoint to get the current interest rate
     @GetMapping("/interest-rate")
-    public ResponseEntity<Object> getInterestRate() {
-        return ResponseEntity.ok(3.5);
+    public ResponseEntity<Object> getInterestRate() throws FlagsmithClientError {
+        Flags flags = flagsmithClient.getEnvironmentFlags();
+        String featureName = "interest_rate";
+        Object intRate = flags.getFeatureValue(featureName);
+        if (intRate != "") {
+            return ResponseEntity.ok(intRate);
+        }
+        return ResponseEntity.ok(defaultInterestRate);
+
     }
 }
 
